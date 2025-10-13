@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axis Robotics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .transition-colors {
+            transition: background-color 0.3s ease;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .clickable-image {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .clickable-image:hover {
+            transform: scale(1.05);
+        }
+
+        .pptx-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .pptx-viewer {
+            width: 90%;
+            height: 90%;
+            background: white;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .pptx-viewer iframe {
+            width: 100%;
+            height: calc(100% - 60px);
+            border: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .pptx-header {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .close-btn:hover {
+            background: #dc2626;
+        }
+    </style>
+</head>
+<body>
+    <div class="font-sans text-gray-800">
+        <!-- Header -->
+        <header class="bg-gray-900 text-white p-6 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Axis Robotics</h1>
+            <nav class="space-x-6">
+                <a href="#proyecto" class="hover:text-blue-400">Proyecto</a>
+                <a href="#equipo" class="hover:text-blue-400">Equipo</a>
+                <a href="#aplicaciones" class="hover:text-blue-400">Aplicaciones</a>
+                <a href="#contacto" class="hover:text-blue-400">Contacto</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-blue-800 to-gray-900 text-white text-center py-24">
+            <h2 id="hero-title" class="text-4xl font-bold mb-4 fade-in-up">
+                Automatización inteligente para la Industria 4.0
+            </h2>
+            <p class="text-lg max-w-2xl mx-auto mb-8">
+                Pinzas neumáticas de dos dedos para brazos robóticos industriales.
+            </p>
+            <button onclick="openModal('assets/arm_banana.jpg')" class="font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 px-6 py-3 text-base bg-gray-200 text-gray-900 hover:bg-gray-300">
+                Descubre más
+            </button>
+        </section>
+
+        <!-- Proyecto -->
+        <section id="proyecto" class="p-12 bg-gray-100">
+            <h3 class="text-3xl font-semibold mb-6 text-center">Nuestro Proyecto</h3>
+            <p class="max-w-4xl mx-auto text-center text-lg mb-8">
+                Axis Robotics diseña y produce pinzas de dos dedos con accionamiento neumático, una solución esencial para la automatización de la manipulación de piezas. Estas pinzas están meticulosamente diseñadas para ofrecer un equilibrio óptimo entre fuerza de agarre, velocidad operativa y repetibilidad. Se orientan específicamente a mejorar la eficiencia en procesos de empaquetado y paletización, así como en la carga y descarga automatizada de máquinas, actuando como un componente versátil y robusto en cualquier celda robótica.
+            </p>
+            <div class="flex justify-center gap-6 max-w-4xl mx-auto">
+                <img src="assets/claw_1.jpg" alt="Pinza neumática - Vista 1" class="w-64 h-48 object-contain rounded-lg shadow-lg clickable-image" onclick="openModal('assets/claw_1.jpg')" />
+                <img src="assets/claw_2.jpg" alt="Pinza neumática - Vista 2" class="w-64 h-48 object-contain rounded-lg shadow-lg clickable-image" onclick="openModal('assets/claw_2.jpg')" />
+            </div>
+        </section>
+
+        <!-- Equipo -->
+        <section id="equipo" class="p-12">
+            <h3 class="text-3xl font-semibold mb-6 text-center">Nuestro Equipo</h3>
+            <div class="flex justify-center mb-12">
+                <img src="assets/team.png" alt="Equipo Axis Robotics" class="max-w-4xl w-full h-auto rounded-lg shadow-lg" />
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Daniel Sala -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-lg rounded-2xl">
+                    <div class="p-4 p-6 text-center">
+                        <img src="assets/daniel_sala.jpg" alt="Daniel Sala" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover clickable-image" onclick="openModal('assets/daniel_sala.jpg')" />
+                        <h4 class="text-xl font-bold mb-2">Daniel Sala</h4>
+                        <p class="text-gray-600">Ingeniero de procesos productivos</p>
+                    </div>
+                </div>
+
+                <!-- Alex Llorens -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-lg rounded-2xl">
+                    <div class="p-4 p-6 text-center">
+                        <img src="assets/alex_llorens.jpg" alt="Alex Llorens" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover clickable-image" onclick="openModal('assets/alex_llorens.jpg')" />
+                        <h4 class="text-xl font-bold mb-2">Alex Llorens</h4>
+                        <p class="text-gray-600">Ingeniero de diseño mecánico</p>
+                    </div>
+                </div>
+
+                <!-- Rubén Rodríguez -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-lg rounded-2xl">
+                    <div class="p-4 p-6 text-center">
+                        <img src="assets/ruben_rodriguez.jpg" alt="Rubén Rodríguez" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover clickable-image" onclick="openModal('assets/ruben_rodriguez.jpg')" />
+                        <h4 class="text-xl font-bold mb-2">Rubén Rodríguez</h4>
+                        <p class="text-gray-600">Ingeniero de automatización y control</p>
+                    </div>
+                </div>
+
+                <!-- Pau Cortés -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-lg rounded-2xl">
+                    <div class="p-4 p-6 text-center">
+                        <img src="assets/pau_cortez.jpg" alt="Pau Cortés" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover clickable-image" onclick="openModal('assets/pau_cortez.jpg')" />
+                        <h4 class="text-xl font-bold mb-2">Pau Cortés</h4>
+                        <p class="text-gray-600">Ingeniero de layout y seguridad</p>
+                    </div>
+                </div>
+
+                <!-- Aldana Montagut -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-lg rounded-2xl">
+                    <div class="p-4 p-6 text-center">
+                        <img src="assets/aldana_montagut.jpg" alt="Aldana Montagut" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover clickable-image" onclick="openModal('assets/aldana_montagut.jpg')" />
+                        <h4 class="text-xl font-bold mb-2">Aldana Montagut</h4>
+                        <p class="text-gray-600">Jefe de proyecto</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aplicaciones -->
+        <section id="aplicaciones" class="bg-gray-100 p-12">
+            <h3 class="text-3xl font-semibold mb-6 text-center">Aplicaciones</h3>
+            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <!-- Empaquetado y Paletizacion -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-lg rounded-2xl">
+                    <div class="p-4 p-6 text-center">
+                        <h4 class="text-xl font-bold mb-2">Empaquetado y Paletización</h4>
+                        <p class="text-gray-600">
+                            Nuestras pinzas son esenciales en las tareas de empaquetado y paletización, aportando velocidad, precisión, versatilidad y consistencia, elementos esenciales en la fabricación moderna.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Carga y descarga automática -->
+                <div class="bg-white border border-gray-200 rounded-lg shadow-lg rounded-2xl">
+                    <div class="p-4 p-6 text-center">
+                        <h4 class="text-xl font-bold mb-2">Carga y descarga automática</h4>
+                        <p class="text-gray-600">
+                            Nuestras pinzas robóticas automatizan el flujo de trabajo para máxima productividad. Ofrecen un agarre preciso para la carga, y una extracción rápida y segura de piezas, incluso calientes o peligrosas, en la descarga de máquinas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section id="contacto" class="p-12 text-center">
+            <h3 class="text-3xl font-semibold mb-6">Contacto</h3>
+            <p class="mb-4">¿Quieres saber más sobre Axis Robotics?</p>
+            <button class="font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 px-6 py-3 text-base bg-blue-600 text-white hover:bg-blue-700 flex items-center gap-2 mx-auto">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                info@axis-robotics.com
+            </button>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white p-6 text-center">
+            <p>© <span id="current-year"></span> Axis Robotics. Todos los derechos reservados.</p>
+            <button id="doge-btn" class="mt-4 px-3 py-1 text-xs bg-yellow-600 hover:bg-yellow-700 text-white rounded transition-colors opacity-0 hover:opacity-100">
+                doge
+            </button>
+            <div id="doge-container" class="mt-4 flex justify-center hidden">
+                <img src="assets/doge.jpg" alt="Such wow, much automation" class="max-w-xs rounded-lg shadow-lg" />
+            </div>
+        </footer>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal hidden" onclick="closeModal()">
+        <img id="modalImage" src="" alt="Amplified view" />
+    </div>
+
+    <!-- PPTX Modal -->
+    <div id="pptxModal" class="pptx-modal hidden">
+        <div class="pptx-viewer">
+            <div class="pptx-header">
+                <h3 class="text-lg font-bold text-gray-800">Axis Robotics - Presentación</h3>
+                <button class="close-btn" onclick="closePPTX()">✕ Cerrar</button>
+            </div>
+            <iframe id="pptxFrame" src="" title="Axis Robotics Presentation"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Set current year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Doge functionality
+        const dogeBtn = document.getElementById('doge-btn');
+        const dogeContainer = document.getElementById('doge-container');
+        let dogeVisible = false;
+
+        dogeBtn.addEventListener('click', function() {
+            dogeVisible = !dogeVisible;
+            if (dogeVisible) {
+                dogeContainer.classList.remove('hidden');
+            } else {
+                dogeContainer.classList.add('hidden');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Image modal functions
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+                closePPTX();
+            }
+        });
+
+        // PPTX modal functions
+        function openPPTX() {
+            const modal = document.getElementById('pptxModal');
+            const iframe = document.getElementById('pptxFrame');
+
+            // Use Microsoft Office Online viewer
+            const pptxUrl = encodeURIComponent(window.location.origin + '/assets/axis_robotics.pptx');
+            iframe.src = `https://view.officeapps.live.com/op/embed.aspx?src=${pptxUrl}`;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePPTX() {
+            const modal = document.getElementById('pptxModal');
+            const iframe = document.getElementById('pptxFrame');
+
+            modal.classList.add('hidden');
+            iframe.src = ''; // Clear iframe to stop loading
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+</html>
